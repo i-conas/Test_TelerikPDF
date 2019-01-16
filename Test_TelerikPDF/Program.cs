@@ -19,8 +19,20 @@ namespace Test_TelerikPDF
 {
     class Program
     {
+        public static readonly string VerzeichnisProjekt = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\")); // da BaseDirectory sonst bin/Debug liefern würde
+        public static readonly string VerzeichnisInput = VerzeichnisProjekt + "Input\\";
+        public static readonly string VerzeichnisAusgabe = VerzeichnisProjekt + "Output\\";
+        public static readonly string DateiTemplate = VerzeichnisInput + "Template.pdf";
+
+
         static void Main(string[] args)
         {
+            ErzeugeEinfachesDokument();
+        }
+
+
+        public static void ErzeugeEinfachesDokument()
+        {            
             RadFixedDocument document = new RadFixedDocument();
             RadFixedPage page = document.Pages.AddPage();
 
@@ -28,10 +40,16 @@ namespace Test_TelerikPDF
             editor.DrawText("Hallo Armand!");
 
             PdfFormatProvider provider = new PdfFormatProvider();
-            using (Stream output = File.OpenWrite("Test_Telerik.pdf"))
+            using (Stream output = File.OpenWrite(VerzeichnisAusgabe + "Test_EinfachesDokument.pdf"))
             {
                 provider.Export(document, output);
             }
+        }
+
+
+        public static void ErzeugeUeberlagertesDokument()
+        {
+
         }
     }
 }
